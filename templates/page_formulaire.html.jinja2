@@ -1,0 +1,41 @@
+{% block body %}
+
+
+
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">ScoringApp</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Domaine</td>
+                <td>Score</td>
+            </tr>
+            <tr>
+                {% if score_organisation is defined %}
+                    <td>Organisation</td>
+                    <td>{{ score_organisation }} / 100</td>
+                {% else %}
+                    <td><a href="{{ url_for("formulaire_gouvernance",id_entreprise = id_entreprise) }}">Organisation</a></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+            <tr>
+                {% if score_technique is defined %}
+                    <td>Technique</td>
+                    <td>{{ score_technique }} / 100 </td>
+                {% else %}
+                    <td><a href="{{ url_for("formulaire_gestion_systemes",id_entreprise = id_entreprise) }}">Technique</a></td>
+                    <td></td>
+                {% endif %}
+            </tr>
+
+        </tbody>
+    </table>
+
+    {% if score_total is defined %}
+    <h3>Score total = {{ score_total }} / 100</h3>
+    {% endif %}
+{% endblock %}

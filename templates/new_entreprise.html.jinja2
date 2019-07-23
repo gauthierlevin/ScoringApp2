@@ -1,0 +1,13 @@
+{% block body %}
+
+    <form action="{{ url_for("add_entreprise") }}" method="post">
+
+    <input name="Nom" type="text" placeholder="Nom Entreprise" autocomplete="off" value="{{ Nom }}">
+    <input name="Nombre_employes" type="text" placeholder="Nombre d'employés" autocomplete="off" value="{{ Nombre_employes }}">
+    <input name="Secteur" type="text" placeholder="Secteur" autocomplete="off" value="{{ Secteur }}">
+
+    <button class="btn btn-primary" type="submit">Enregistrer</button>
+
+    </form>
+
+{% endblock %}

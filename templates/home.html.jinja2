@@ -1,0 +1,11 @@
+{% block body %}
+
+    <p><a href="{{ url_for("new_entreprise") }}">Nouvelle Entreprise</a></p>
+
+    <ul>
+    {% for entreprise in entreprise_liste %}
+        <li><a href="{{ url_for("reponses_formulaire", id_entreprise = entreprise[0]) }}">{{ entreprise[1] }} </a> {{ entreprise[2] }} {{ entreprise[3] }}
+        {{ entreprise[4] }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
