@@ -13,7 +13,7 @@ Liste_formulaires_techniques = ["Formulaire_gestion_systemes", "Formulaire_appli
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/home')
 def home():
     return flask.render_template("home.html.jinja2")
 
