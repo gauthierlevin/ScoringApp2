@@ -1,13 +1,45 @@
+{% extends 'layout.html' %}
+
 {% block body %}
 
     <form action="{{ url_for("add_entreprise") }}" method="post">
-
-    <input name="Nom" type="text" placeholder="Nom Entreprise" autocomplete="off" value="{{ Nom }}">
-    <input name="Nombre_employes" type="text" placeholder="Nombre d'employés" autocomplete="off" value="{{ Nombre_employes }}">
-    <input name="Secteur" type="text" placeholder="Secteur" autocomplete="off" value="{{ Secteur }}">
-
-    <button class="btn btn-primary" type="submit">Enregistrer</button>
+        <div class="form-group">
+            <label for="formGroupExampleInput">Nom entreprise</label>
+            <input class="form-control" id="formGroupExampleInput" name="Nom" type="text" placeholder="Nom Entreprise" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="formGroupExampleInput2">Nombre d'employés</label>
+            <input class="form-control" id="formGroupExampleInput2" name="Nombre_employes" type="text" placeholder="Nombre d'employés" autocomplete="off">
+        </div>
+        <div class="form-group">
+                <label for="inputSecteur">Secteur d'activité</label>
+                    <select id="inputSecteur" class="form-control" name="Secteur">
+                        <option>Choisir un secteur d'activité ...</option>
+                        <option class="fa">&#xf2e7; Agroalimentaire</option>
+                        <option class="fa">&#xf249; Bois / Papier / Carton / Imprimerie</option>
+                        <option class="fa">&#xf0c3; Chimie / Parachimie</option>
+                        <option class="fa">&#xf1ea; Edition / communication / Multimédia</option>
+                        <option class="fa">&#xf080; Etudes et conseils</option>
+                        <option class="fa">&#xf108; Informatique / Télécoms</option>
+                        <option class="fa">&#xf576; Métallurgie / Travail du métal</option>
+                        <option class="fa">&#xf4c4; Services aux entreprises</option>
+                        <option class="fa">&#xf4df; Transport / Logistique</option>
+                        <option class="fa">&#xf19c; Banque / Assurance</option>
+                        <option class="fa">&#xf015; BTP / Matériaux de construction</option>
+                        <option class="fa">&#xf07a; Commerce / Distribution</option>
+                        <option class="fa">&#xf2db; Electronique / Electricité</option>
+                        <option class="fa">&#xf610; Industrie du pharmaceutique</option>
+                        <option class="fa">&#xf085; Machines et équipements / Automobile</option>
+                        <option class="fa">&#xf275; Plastique / Caoutchouc</option>
+                        <option class="fa">&#xf553; Textile / Habillement / Chaussure</option>
+                        <option>Autres ..</option>
+                    </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Enregistrer</button>
 
     </form>
 
+
 {% endblock %}
+
+

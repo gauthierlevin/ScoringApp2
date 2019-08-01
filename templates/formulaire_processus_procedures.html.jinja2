@@ -1,25 +1,71 @@
+{% extends 'layout.html' %}
+
 {% block body %}
 
-    <h3>Processus et procédures</h3>
+    <h3>Processus et procédures :</h3>
 
-    <form action="{{ url_for("add_processus_procedures",id_entreprise=id_entreprise) }}" method="post">
+    <form id="reponses" action="{{ url_for("add_processus_procedures",id_entreprise=id_entreprise) }}" method="post"></form>
 
     {% for k in range(1,7) %}
-        <p>Question{{ k }}</p>
-        <div>
-            <input type="radio" id="0" name="q{{ k }}" value=0 checked>
-            <label for="0">0</label>
-        </div>
-        {% for i in range(1,11) %}
-            <div>
-                <input type="radio" id="{{ i }}" name="q{{ k }}" value={{ i }}>
-                <label for="{{ i }}">{{ i }}</label>
+        <div class="bordure">
+            <p>{{ questions[k-1] }}</p>
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#question{{ k }}Modal" id="modifier">
+              <i class="far fa-edit"></i>
+            </button>
+            <!-- Modal -->
+            <form id="modal" action="{{ url_for("modifier_questions_processus_procedures",id_entreprise=id_entreprise) }}" method="post"></form>
+            <div class="modal fade" id="question{{ k }}Modal" tabindex="-1" role="dialog" aria-labelledby="question{{ k }}ModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="question{{ k }}ModalLabel">Modifier la question {{ k }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                      <label for="q{{ k }}"></label>
+                      <textarea id="q{{ k }}" name = 'q{{ k }}'  rows="5" cols="60" form="modal">{{ questions[k-1] }}</textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" form="modal">Modifier</button>
+                  </div>
+
+                </div>
+              </div>
             </div>
-        {% endfor %}
+            {% if scores is not defined %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check form-check-inline" type="radio" id="0" name="s{{ k }}" value=0 form="reponses" checked>
+                    <label for="0">0</label>
+                </div>
+                {% for i in range(1,11) %}
+                    <div class="form-check form-check-inline">
+                        <input class="form-check form-check-inline" type="radio" id="{{ i }}" name="s{{ k }}" form="reponses" value={{ i }}>
+                        <label for="{{ i }}">{{ i }}</label>
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for i in range(0,11) %}
+                    {% if i == scores[k-1] %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check form-check-inline" type="radio" id="{{ i }}" name="s{{ k }}" form="reponses" value={{ i }} checked>
+                            <label for="{{ i }}">{{ i }}</label>
+                        </div>
+                    {% else %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check form-check-inline" type="radio" id="{{ i }}" name="s{{ k }}" form="reponses" value={{ i }}>
+                            <label for="{{ i }}">{{ i }}</label>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
     {% endfor %}
 
-     <button class="btn btn-primary" type="submit">Suivant</button>
-
-    </form>
+        <button id="suivant" class="btn btn-primary" type="submit" form="reponses">Suivant</button>
 
 {% endblock %}

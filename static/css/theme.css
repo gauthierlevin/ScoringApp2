@@ -1,0 +1,40 @@
+body {
+    padding-top: 8em;
+
+}
+
+.center {
+    text-align: center;
+}
+
+#centrer_cellule {
+    display: table-cell;
+    text-align: center;
+}
+
+#suivant {
+    margin: 0 auto;
+    display: block;
+    bottom:20px;
+}
+
+#modifier {
+    position: relative;
+    bottom: 10px;
+}
+
+.bordure {
+    border: 1px solid darkslateblue;
+    border-radius: 5px;
+    text-align: center;
+    margin: 40px;
+    padding:50px;
+    background-color: #ffe7b8;
+    word-wrap: break-word;
+}
+
+
+h3 {
+    text-align: center;
+}
+

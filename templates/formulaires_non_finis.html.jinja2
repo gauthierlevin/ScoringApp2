@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <h3>Liste des formulaires en cours</h3>
+
+    <ul>
+    {% for trouple in L %}
+        <li>{{ trouple[1] }} <a href="{{ url_for( trouple[2].lower(), id_entreprise = trouple[0]) }}">Continuez le formulaire</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

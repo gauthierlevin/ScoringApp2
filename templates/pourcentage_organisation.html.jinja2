@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <form action="{{ url_for("add_pourcentage_organisation", id_entreprise=id_entreprise) }}" method="post">
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" class="center">Organisation</th>
+              <th scope="col" class="center">Pourcentage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><label for="p_gouvernance">Gouvernance</label></td>
+              <td><input id="p_gouvernance" type="number" name="p_gouvernance" value="{{ pourcentages[0] }}" oninput="total()"></td>
+            </tr>
+            <tr>
+              <td><label for="p_processus_procedures">Processus et procédures</label></td>
+              <td><input id="p_processus_procedures" type="number" name="p_processus_procedures" value="{{ pourcentages[1] }}" oninput="total()"></td>
+            </tr>
+            <tr>
+              <td><label for="p_roles_responsabilites">Rôles et responsabilités</label></td>
+              <td><input id="p_roles_responsabilites" type="number" name="p_roles_responsabilites" value="{{ pourcentages[2] }}" oninput="total()"></td>
+            </tr>
+            <tr>
+              <td><label for="p_outillage">Outillage</label></td>
+              <td><input id="p_outillage" type="number" name="p_outillage" value="{{ pourcentages[3] }}" oninput="total()"></td>
+            </tr>
+            <tr>
+              <td><label for="p_conduite_du_changement">Conduite du changement</label></td>
+              <td><input id="p_conduite_du_changement" type="number" name="p_conduite_du_changement" value="{{ pourcentages[4] }}" oninput="total()"></td>
+            </tr>
+            <tr>
+              <th>Total :</th>
+              <th><span id="result">{{ total }}</span></th>
+            </tr>
+          </tbody>
+        </table>
+
+        <p id="remarque" style="color: red"><i class="fas fa-exclamation-triangle"></i> Le total doit être égal à 100</p>
+        <button id="submit_orga" type="submit" class="btn btn-primary">Valider</button>
+
+    </form>
+
+     <script>
+        function total() {
+            var gouv = parseFloat($("#p_gouvernance").val());
+            var proc = parseFloat($("#p_processus_procedures").val());
+            var rol = parseFloat($("#p_roles_responsabilites").val());
+            var out = parseFloat($("#p_outillage").val());
+            var cond = parseFloat($("#p_conduite_du_changement").val());
+
+            var total = gouv + proc + rol + out + cond;
+
+            $("#result").text(total);
+
+            if(total !== 100) {
+                $("#remarque").show();
+                $("#submit_orga").hide();
+            }
+            else {
+                $("#submit_orga").show();
+                $("#remarque").hide();
+            }
+        }
+    </script>
+
+
+{% endblock %}
+
+
