@@ -1266,4 +1266,5 @@ def reponses_formulaire(id_entreprise):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.debug = True
+    app.run()
