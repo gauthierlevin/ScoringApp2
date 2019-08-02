@@ -11,7 +11,7 @@
         <div class="bordure">
             <p>{{ questions[k-1] }}</p>
 
-            <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#question{{ k }}Modal" id="modifier"><i class="far fa-edit"></i></button>
+            <a data-toggle="modal" href="#question{{ k }}Modal" id="modifier"><i class="far fa-edit"></i></a>
 
             <!-- Modal -->
             <form id="modal" action="{{ url_for("modifier_questions_gouvernance",id_entreprise=id_entreprise) }}" method="post"></form>
@@ -36,7 +36,6 @@
                 </div>
               </div>
             </div>
-
 
             {% if scores is not defined %}
                 <div class="form-check form-check-inline">
@@ -64,6 +63,21 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
+
+            <p>
+              <a id="comm" data-toggle="collapse" href="#comm{{ k }}" aria-expanded="false" aria-controls="collapseExample">
+                <i class="far fa-comments"></i>
+              </a>
+            </p>
+            <form id="commentaire" action="{{ url_for("modifier_commentaires_gouvernance", id_entreprise=id_entreprise) }}" method="post"></form>
+            <div class="collapse" id="comm{{ k }}">
+                <div class="card card-body">
+                    <label for="comm{{ k }}"></label>
+                    <textarea id="comm{{ k }}" name = 'c{{ k }}'  rows="2" cols="30" form="commentaire">{{ commentaires[k-1] }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" form="commentaire">Ajouter</button>
+            </div>
+
         </div>
 
     {% endfor %}

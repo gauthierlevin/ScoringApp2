@@ -2,45 +2,45 @@
 
 {% block body %}
     <form action="{{ url_for("add_pourcentage_organisation", id_entreprise=id_entreprise) }}" method="post">
+        <div id="groupe">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th id="bordure_noire" scope="col" class="center" style="width: 50%">Organisation</th>
+                  <th id="bordure_noire" scope="col" class="center">Pourcentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="bordure_noire"><label for="p_gouvernance">Gouvernance</label></td>
+                  <td id="bordure_noire"><input id="p_gouvernance" type="number" name="p_gouvernance" value="{{ pourcentages[0] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_processus_procedures">Processus et procédures</label></td>
+                  <td id="bordure_noire"><input id="p_processus_procedures" type="number" name="p_processus_procedures" value="{{ pourcentages[1] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_roles_responsabilites">Rôles et responsabilités</label></td>
+                  <td id="bordure_noire"><input id="p_roles_responsabilites" type="number" name="p_roles_responsabilites" value="{{ pourcentages[2] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_outillage">Outillage</label></td>
+                  <td id="bordure_noire"><input id="p_outillage" type="number" name="p_outillage" value="{{ pourcentages[3] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_conduite_du_changement">Conduite du changement</label></td>
+                  <td id="bordure_noire"><input id="p_conduite_du_changement" type="number" name="p_conduite_du_changement" value="{{ pourcentages[4] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <th id="bordure_noire">Total :</th>
+                  <th id="bordure_noire"><span id="result">{{ total }}</span></th>
+                </tr>
+              </tbody>
+            </table>
 
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col" class="center">Organisation</th>
-              <th scope="col" class="center">Pourcentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><label for="p_gouvernance">Gouvernance</label></td>
-              <td><input id="p_gouvernance" type="number" name="p_gouvernance" value="{{ pourcentages[0] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_processus_procedures">Processus et procédures</label></td>
-              <td><input id="p_processus_procedures" type="number" name="p_processus_procedures" value="{{ pourcentages[1] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_roles_responsabilites">Rôles et responsabilités</label></td>
-              <td><input id="p_roles_responsabilites" type="number" name="p_roles_responsabilites" value="{{ pourcentages[2] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_outillage">Outillage</label></td>
-              <td><input id="p_outillage" type="number" name="p_outillage" value="{{ pourcentages[3] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_conduite_du_changement">Conduite du changement</label></td>
-              <td><input id="p_conduite_du_changement" type="number" name="p_conduite_du_changement" value="{{ pourcentages[4] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <th>Total :</th>
-              <th><span id="result">{{ total }}</span></th>
-            </tr>
-          </tbody>
-        </table>
-
-        <p id="remarque" style="color: red"><i class="fas fa-exclamation-triangle"></i> Le total doit être égal à 100</p>
-        <button id="submit_orga" type="submit" class="btn btn-primary">Valider</button>
-
+            <p id="remarque" style="color: red"><i class="fas fa-exclamation-triangle"></i> Le total doit être égal à 100</p>
+            <button id="submit_orga" type="submit" class="btn btn-primary">Valider</button>
+        </div>
     </form>
 
      <script>

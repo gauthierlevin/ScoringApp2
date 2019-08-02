@@ -163,13 +163,20 @@ def formulaire_gouvernance(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_gouvernance 
     WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_gouvernance WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_gouvernance(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_gouvernance WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
     if(cursor.execute('''SELECT * FROM Formulaire_gouvernance WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gouvernance 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
         return flask.render_template("formulaire_gouvernance.html.jinja2", id_entreprise=id_entreprise, scores=scores,
-                                     questions=questions)
+                                     questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_gouvernance.html.jinja2", id_entreprise=id_entreprise, questions = questions)
+    return flask.render_template("formulaire_gouvernance.html.jinja2", id_entreprise=id_entreprise, questions = questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_gouvernance', methods=["POST"])
 def add_gouvernance(id_entreprise):
@@ -215,6 +222,22 @@ def modifier_questions_gouvernance(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_gouvernance", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_gouvernance/modifier_commentaires_gouvernance', methods=["POST"])
+def modifier_commentaires_gouvernance(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_gouvernance SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_gouvernance", id_entreprise=id_entreprise))
+
 
 
 #PROCESSUS ET PROCEDURES
@@ -231,13 +254,21 @@ def formulaire_processus_procedures(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_processus_procedures 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_processus_procedures WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_processus_procedures(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_processus_procedures WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_processus_procedures WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_processus_procedures
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
         return flask.render_template("formulaire_processus_procedures.html.jinja2", id_entreprise=id_entreprise, scores=scores,
-                                     questions=questions)
+                                     questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_processus_procedures.html.jinja2", id_entreprise=id_entreprise, questions = questions)
+    return flask.render_template("formulaire_processus_procedures.html.jinja2", id_entreprise=id_entreprise, questions = questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_processus_procedures', methods=["POST"])
 def add_processus_procedures(id_entreprise):
@@ -282,6 +313,22 @@ def modifier_questions_processus_procedures(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_processus_procedures", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_processus_procedures/modifier_commentaires_processus_procedures', methods=["POST"])
+def modifier_commentaires_processus_procedures(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_processus_procedures SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_processus_procedures", id_entreprise=id_entreprise))
+
 
 
 #ROLES ET RESPONSABILITES
@@ -299,13 +346,20 @@ def formulaire_roles_responsabilites(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_roles_responsabilites 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_roles_responsabilites WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_roles_responsabilites(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_roles_responsabilites WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
     if (cursor.execute('''SELECT * FROM Formulaire_roles_responsabilites WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_roles_responsabilites
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
         return flask.render_template("formulaire_roles_responsabilites.html.jinja2", id_entreprise=id_entreprise, scores=scores,
-                                     questions=questions)
+                                     questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_roles_responsabilites.html.jinja2", id_entreprise=id_entreprise, questions = questions)
+    return flask.render_template("formulaire_roles_responsabilites.html.jinja2", id_entreprise=id_entreprise, questions = questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_roles_responsabilites', methods=["POST"])
 def add_roles_responsabilites(id_entreprise):
@@ -350,6 +404,22 @@ def modifier_questions_roles_responsabilites(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_roles_responsabilites", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_roles_responsabilites/modifier_commentaires_roles_responsabilites', methods=["POST"])
+def modifier_commentaires_roles_responsabilites(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_roles_responsabilites SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_roles_responsabilites", id_entreprise=id_entreprise))
+
 
 
 #OUTILLAGE
@@ -366,12 +436,20 @@ def formulaire_outillage(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_outillage
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_outillage WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_outillage(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_outillage WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_outillage WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outillage
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
-        return flask.render_template("formulaire_outillage.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions)
+        return flask.render_template("formulaire_outillage.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_outillage.html.jinja2", id_entreprise=id_entreprise, questions = questions)
+    return flask.render_template("formulaire_outillage.html.jinja2", id_entreprise=id_entreprise, questions = questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_outillage', methods=["POST"])
 def add_outillage(id_entreprise):
@@ -415,6 +493,22 @@ def modifier_questions_outillage(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_outillage", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_outillage/modifier_commentaires_outillage', methods=["POST"])
+def modifier_commentaires_outillage(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_outillage SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_outillage", id_entreprise=id_entreprise))
+
 
 
 #CONDUITE DU CHANGEMENT
@@ -431,12 +525,20 @@ def formulaire_conduite_du_changement(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_conduite_du_changement 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_conduite_du_changement WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_conduite_du_changement(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_conduite_du_changement WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_conduite_du_changement WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_conduite_du_changement
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
-        return flask.render_template("formulaire_conduite_du_changement.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions)
+        return flask.render_template("formulaire_conduite_du_changement.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_conduite_du_changement.html.jinja2", id_entreprise=id_entreprise, questions = questions)
+    return flask.render_template("formulaire_conduite_du_changement.html.jinja2", id_entreprise=id_entreprise, questions = questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_conduite_du_changement', methods=["POST"])
 def add_conduite_du_changement(id_entreprise):
@@ -477,6 +579,22 @@ def modifier_questions_conduite_du_changement(id_entreprise):
 
     cursor.execute('''UPDATE Question_conduite_du_changement SET Question1=?, Question2=?, Question3=?, Question4=?, Question5=?, Question6=?
      WHERE Id_entreprise = ? ''', q1, q2, q3, q4, q5, q6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_conduite_du_changement", id_entreprise=id_entreprise))
+
+@app.route('/<id_entreprise>/page_formulaire/formulaire_conduite_du_changement/modifier_commentaires_conduite_du_changement', methods=["POST"])
+def modifier_commentaires_conduite_du_changement(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_conduite_du_changement SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
     cnxn.commit()
 
     return flask.redirect(flask.url_for("formulaire_conduite_du_changement", id_entreprise=id_entreprise))
@@ -555,12 +673,20 @@ def formulaire_gestion_systemes(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_gestion_systemes
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_gestion_systemes WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_gestion_systemes(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_gestion_systemes WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_gestion_systemes WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gestion_systemes 
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
-        return flask.render_template("formulaire_gestion_systemes.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions)
+        return flask.render_template("formulaire_gestion_systemes.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_gestion_systemes.html.jinja2", id_entreprise=id_entreprise, questions = questions)
+    return flask.render_template("formulaire_gestion_systemes.html.jinja2", id_entreprise=id_entreprise, questions = questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_gestion_systemes', methods=["POST"])
 def add_gestion_systemes(id_entreprise):
@@ -605,6 +731,22 @@ def modifier_questions_gestion_systemes(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_gestion_systemes", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_gestion_systemes/modifier_commentaires_gestion_systemes', methods=["POST"])
+def modifier_commentaires_gestion_systemes(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_gestion_systemes SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_gestion_systemes", id_entreprise=id_entreprise))
+
 
 
 #APPLICATIONS
@@ -621,12 +763,20 @@ def formulaire_applications(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_applications 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_applications WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_applications(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_applications WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_applications WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_applications 
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
-        return flask.render_template("formulaire_applications.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions)
+        return flask.render_template("formulaire_applications.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_applications.html.jinja2", id_entreprise=id_entreprise, questions = questions)
+    return flask.render_template("formulaire_applications.html.jinja2", id_entreprise=id_entreprise, questions = questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_applications', methods=["POST"])
 def add_applications(id_entreprise):
@@ -671,6 +821,22 @@ def modifier_questions_applications(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_applications", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_applications/modifier_commentaires_applications', methods=["POST"])
+def modifier_commentaires_applications(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_gestion_systemes SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_gestion_systemes", id_entreprise=id_entreprise))
+
 
 
 #SECURITE
@@ -687,12 +853,20 @@ def formulaire_securite(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_securite 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_securite WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_securite(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_securite WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_securite WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_securite 
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
-        return flask.render_template("formulaire_securite.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions)
+        return flask.render_template("formulaire_securite.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_securite.html.jinja2", id_entreprise=id_entreprise, questions=questions)
+    return flask.render_template("formulaire_securite.html.jinja2", id_entreprise=id_entreprise, questions=questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_securite', methods=["POST"])
 def add_securite(id_entreprise):
@@ -736,6 +910,22 @@ def modifier_questions_securite(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_securite", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_securite/modifier_commentaires_securite', methods=["POST"])
+def modifier_commentaires_securite(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_securite SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_securite", id_entreprise=id_entreprise))
+
 
 
 #SUPPORT
@@ -752,12 +942,20 @@ def formulaire_support(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_support 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_support WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_support(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_support WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_support WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_support
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
-        return flask.render_template("formulaire_support.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions)
+        return flask.render_template("formulaire_support.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_support.html.jinja2", id_entreprise=id_entreprise, questions=questions)
+    return flask.render_template("formulaire_support.html.jinja2", id_entreprise=id_entreprise, questions=questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_support', methods=["POST"])
 def add_support(id_entreprise):
@@ -802,6 +1000,22 @@ def modifier_questions_support(id_entreprise):
 
     return flask.redirect(flask.url_for("formulaire_support", id_entreprise=id_entreprise))
 
+@app.route('/<id_entreprise>/page_formulaire/formulaire_support/modifier_commentaires_support', methods=["POST"])
+def modifier_commentaires_support(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_support SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_support", id_entreprise=id_entreprise))
+
 
 
 #OUTILS COLLABORATIF
@@ -818,12 +1032,20 @@ def formulaire_outils_collaboratif(id_entreprise):
     questions = cursor.execute('''SELECT Question1, Question2, Question3, Question4, Question5, Question6 FROM Question_outils_collaboratif 
         WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
+    if (cursor.execute('''SELECT * FROM Comm_outils_collaboratif WHERE  Id_entreprise = ?''', id_entreprise).fetchone() == None):
+        insert_query = '''INSERT INTO Comm_outils_collaboratif(Id_entreprise) VALUES (?);'''
+        cursor.execute(insert_query, id_entreprise)
+        cnxn.commit()
+
+    commentaires = cursor.execute('''SELECT Comm1, Comm2, Comm3, Comm4, Comm5, Comm6 FROM Comm_outils_collaboratif WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
+
+
     if (cursor.execute('''SELECT * FROM Formulaire_outils_collaboratif WHERE  Id_entreprise = ?''', id_entreprise).fetchone() != None):
         scores = cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outils_collaboratif 
             WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
-        return flask.render_template("formulaire_outils_collaboratif.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions)
+        return flask.render_template("formulaire_outils_collaboratif.html.jinja2", id_entreprise=id_entreprise, scores=scores, questions=questions, commentaires=commentaires)
 
-    return flask.render_template("formulaire_outils_collaboratif.html.jinja2", id_entreprise=id_entreprise, questions=questions)
+    return flask.render_template("formulaire_outils_collaboratif.html.jinja2", id_entreprise=id_entreprise, questions=questions, commentaires=commentaires)
 
 @app.route('/<id_entreprise>/page_formulaire/add_outils_collaboratif', methods=["POST"])
 def add_outils_collaboratif(id_entreprise):
@@ -867,6 +1089,24 @@ def modifier_questions_outils_collaboratif(id_entreprise):
     cnxn.commit()
 
     return flask.redirect(flask.url_for("formulaire_outils_collaboratif", id_entreprise=id_entreprise))
+
+@app.route('/<id_entreprise>/page_formulaire/formulaire_outils_collaboratif/modifier_commentaires_outils_collaboratif', methods=["POST"])
+def modifier_commentaires_outils_collaboratif(id_entreprise):
+    from database import cursor, cnxn
+    c1 = flask.request.form['c1']
+    c2 = flask.request.form['c2']
+    c3 = flask.request.form['c3']
+    c4 = flask.request.form['c4']
+    c5 = flask.request.form['c5']
+    c6 = flask.request.form['c6']
+
+    cursor.execute('''UPDATE Comm_outils_collaboratif SET Comm1=?, Comm2=?, Comm3=?, Comm4=?, Comm5=?, Comm6=?
+     WHERE Id_entreprise = ? ''', c1, c2, c3, c4, c5, c6, id_entreprise)
+    cnxn.commit()
+
+    return flask.redirect(flask.url_for("formulaire_outils_collaboratif", id_entreprise=id_entreprise))
+
+
 
 
 @app.route('/<id_entreprise>/add_score_technique')

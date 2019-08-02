@@ -2,43 +2,47 @@
 
 {% block body %}
 
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col" class = "center">Domaine</th>
-          <th scope="col" class = "center">Score</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          {% if score_organisation is defined %}
-              <td scope="row"><a href="{{ url_for("formulaire_gouvernance",id_entreprise = id_entreprise) }}">Organisation</a></td>
-              <td>{{ score_organisation }} / 100</td>
-          {% else %}
-              <td scope="row"><a href="{{ url_for("formulaire_gouvernance",id_entreprise = id_entreprise) }}">Organisation</a></td>
-              <td></td>
-          {% endif %}
-        </tr>
-        <tr>
-          {% if score_technique is defined %}
-              <td scope="row"><a href="{{ url_for("formulaire_gestion_systemes",id_entreprise = id_entreprise) }}">Technique</a></td>
-              <td>{{ score_technique }} / 100 </td>
-          {% else %}
-              <td scope="row"><a href="{{ url_for("formulaire_gestion_systemes",id_entreprise = id_entreprise) }}">Technique</a></td>
-              <td></td>
-          {% endif %}
-        </tr>
-        {% if score_total is defined %}
-        <tr>
-          <th scope="row" colspan="2" class="center"> Score total = {{ score_total }} / 100 </th>
-        </tr>
-        {% endif %}
-      </tbody>
-    </table>
+    <div id="groupe">
 
-    {% if score_total is defined %}
-        <button onclick="window.location.href = '{{ url_for("comparaison", id_entreprise = id_entreprise) }}';" class="btn btn-outline-primary"><i class="fas fa-chart-pie"></i> Comparaison</button>
-    {% endif %}
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th id="bordure_noire" scope="col" class = "center" style="width: 50%">Domaine</th>
+              <th id="bordure_noire" scope="col" class = "center">Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {% if score_organisation is defined %}
+                  <td id="bordure_noire" scope="row"><a href="{{ url_for("formulaire_gouvernance",id_entreprise = id_entreprise) }}">Organisation</a></td>
+                  <td id="bordure_noire">{{ score_organisation }} / 100</td>
+              {% else %}
+                  <td id="bordure_noire" scope="row"><a href="{{ url_for("formulaire_gouvernance",id_entreprise = id_entreprise) }}">Organisation</a></td>
+                  <td id="bordure_noire"></td>
+              {% endif %}
+            </tr>
+            <tr>
+              {% if score_technique is defined %}
+                  <td id="bordure_noire" scope="row"><a href="{{ url_for("formulaire_gestion_systemes",id_entreprise = id_entreprise) }}">Technique</a></td>
+                  <td id="bordure_noire">{{ score_technique }} / 100 </td>
+              {% else %}
+                  <td id="bordure_noire" scope="row"><a href="{{ url_for("formulaire_gestion_systemes",id_entreprise = id_entreprise) }}">Technique</a></td>
+                  <td id="bordure_noire"></td>
+              {% endif %}
+            </tr>
+            {% if score_total is defined %}
+            <tr>
+              <th id="bordure_noire" scope="row" colspan="2" class="center"> Score total = {{ score_total }} / 100 </th>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+
+        {% if score_total is defined %}
+            <button onclick="window.location.href = '{{ url_for("comparaison", id_entreprise = id_entreprise) }}';" class="btn btn-outline-primary"><i class="fas fa-chart-pie"></i> Comparaison</button>
+        {% endif %}
+
+    </div>
 
 
 

@@ -2,31 +2,32 @@
 
 
 {% block body %}
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col" class= "center">Entreprise</th>
-      <th scope="col" class= "center">Score Organisation</th>
-      <th scope="col" class= "center">Score Technique</th>
-      <th scope="col" class= "center">Score total</th>
-      <th scope="col" class= "center">Date</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for entreprise in entreprise_liste %}
-    <tr>
-      <th scope="row"><a href="{{ url_for("reponses_formulaire", id_entreprise = entreprise[0]) }}"> {{ entreprise[1] }} </a></th>
-      <td>{{ entreprise[2] }}</td>
-      <td>{{ entreprise[3] }}</td>
-      <td>{{ entreprise[4] }}</td>
-      <td>{{ entreprise[5] }}</td>
-        <td id = "centrer_cellule"><a href="{{ url_for("delete_formulaire", id_entreprise = entreprise[0]) }}"><i class="fas fa-trash-alt"></i></a> <a href="{{ url_for("page_formulaire", id_entreprise = entreprise[0]) }}"><i class="fas fa-edit"></i></a></td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-
+    <div id="groupe">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th id="bordure_noire" scope="col" class= "center">Entreprise</th>
+              <th id="bordure_noire" scope="col" class= "center">Score Organisation</th>
+              <th id="bordure_noire" scope="col" class= "center">Score Technique</th>
+              <th id="bordure_noire" scope="col" class= "center">Score total</th>
+              <th id="bordure_noire" scope="col" class= "center">Date</th>
+              <th id="bordure_noire" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for entreprise in entreprise_liste %}
+            <tr>
+              <th id="bordure_noire" scope="row"><a href="{{ url_for("reponses_formulaire", id_entreprise = entreprise[0]) }}"> {{ entreprise[1] }} </a></th>
+              <td id="bordure_noire">{{ entreprise[2] }}</td>
+              <td id="bordure_noire">{{ entreprise[3] }}</td>
+              <td id="bordure_noire">{{ entreprise[4] }}</td>
+              <td id="bordure_noire">{{ entreprise[5] }}</td>
+              <td id="bordure_noire" class="center"><a href="{{ url_for("delete_formulaire", id_entreprise = entreprise[0]) }}"><i class="fas fa-trash-alt"></i></a> <a href="{{ url_for("page_formulaire", id_entreprise = entreprise[0]) }}"><i class="fas fa-edit"></i></a></td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
 
 
 

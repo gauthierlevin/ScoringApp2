@@ -2,45 +2,45 @@
 
 {% block body %}
     <form action="{{ url_for("add_pourcentage_technique", id_entreprise=id_entreprise) }}" method="post">
+        <div id="groupe">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th id="bordure_noire" scope="col" class="center" style="width: 50%">Technique</th>
+                  <th id="bordure_noire" scope="col" class="center">Pourcentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="bordure_noire"><label for="p_gestion_systemes">Gestion des systèmes</label></td>
+                  <td id="bordure_noire"><input id="p_gestion_systemes" type="number" name="p_gestion_systemes" value="{{ pourcentages[0] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_applications">Applications</label></td>
+                  <td id="bordure_noire"><input id="p_applications" type="number" name="p_applications" value="{{ pourcentages[1] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_securite">Sécurité</label></td>
+                  <td id="bordure_noire"><input id="p_securite" type="number" name="p_securite" value="{{ pourcentages[2] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_support">Support</label></td>
+                  <td id="bordure_noire"><input id="p_support" type="number" name="p_support" value="{{ pourcentages[3] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <td id="bordure_noire"><label for="p_outils_collaboratif">Outils collaboratif</label></td>
+                  <td id="bordure_noire"><input id="p_outils_collaboratif" type="number" name="p_outils_collaboratif" value="{{ pourcentages[4] }}" oninput="total()"></td>
+                </tr>
+                <tr>
+                  <th id="bordure_noire">Total :</th>
+                  <th id="bordure_noire"><span id="result">{{ total }}</span></th>
+                </tr>
+              </tbody>
+            </table>
 
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th scope="col" class="center">Technique</th>
-              <th scope="col" class="center">Pourcentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><label for="p_gestion_systemes">Gestion des systèmes</label></td>
-              <td><input id="p_gestion_systemes" type="number" name="p_gestion_systemes" value="{{ pourcentages[0] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_applications">Applications</label></td>
-              <td><input id="p_applications" type="number" name="p_applications" value="{{ pourcentages[1] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_securite">Sécurité</label></td>
-              <td><input id="p_securite" type="number" name="p_securite" value="{{ pourcentages[2] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_support">Support</label></td>
-              <td><input id="p_support" type="number" name="p_support" value="{{ pourcentages[3] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <td><label for="p_outils_collaboratif">Outils collaboratif</label></td>
-              <td><input id="p_outils_collaboratif" type="number" name="p_outils_collaboratif" value="{{ pourcentages[4] }}" oninput="total()"></td>
-            </tr>
-            <tr>
-              <th>Total :</th>
-              <th><span id="result">{{ total }}</span></th>
-            </tr>
-          </tbody>
-        </table>
-
-        <p id="remarque" style="color: red"><i class="fas fa-exclamation-triangle"></i> Le total doit être égal à 100</p>
-        <button id="submit_technique" type="submit" class="btn btn-primary">Valider</button>
-
+            <p id="remarque" style="color: red"><i class="fas fa-exclamation-triangle"></i> Le total doit être égal à 100</p>
+            <button id="submit_technique" type="submit" class="btn btn-primary">Valider</button>
+        </div>
     </form>
 
      <script>
