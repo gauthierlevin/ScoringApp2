@@ -39,7 +39,7 @@
         </table>
 
         {% if score_total is defined %}
-            <button onclick="window.location.href = '{{ url_for("comparaison", id_entreprise = id_entreprise) }}';" class="btn btn-outline-primary"><i class="fas fa-chart-pie"></i> Comparaison</button>
+            <button onclick="window.location.href = '{{ url_for("liste_formulaires_finis", id_entreprise = id_entreprise ,secteur = 'Tous les secteurs...') }}';" class="btn btn-outline-primary"><i class="fas fa-chart-pie"></i> Comparaison</button>
         {% endif %}
 
     </div>

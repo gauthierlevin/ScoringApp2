@@ -3,32 +3,171 @@
 
 {% block body %}
     <div id="groupe">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th id="bordure_noire" scope="col" class= "center">Entreprise</th>
-              <th id="bordure_noire" scope="col" class= "center">Score Organisation</th>
-              <th id="bordure_noire" scope="col" class= "center">Score Technique</th>
-              <th id="bordure_noire" scope="col" class= "center">Score total</th>
-              <th id="bordure_noire" scope="col" class= "center">Date</th>
-              <th id="bordure_noire" scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for entreprise in entreprise_liste %}
-            <tr>
-              <th id="bordure_noire" scope="row"><a href="{{ url_for("reponses_formulaire", id_entreprise = entreprise[0]) }}"> {{ entreprise[1] }} </a></th>
-              <td id="bordure_noire">{{ entreprise[2] }}</td>
-              <td id="bordure_noire">{{ entreprise[3] }}</td>
-              <td id="bordure_noire">{{ entreprise[4] }}</td>
-              <td id="bordure_noire">{{ entreprise[5] }}</td>
-              <td id="bordure_noire" class="center"><a href="{{ url_for("delete_formulaire", id_entreprise = entreprise[0]) }}"><i class="fas fa-trash-alt"></i></a> <a href="{{ url_for("page_formulaire", id_entreprise = entreprise[0]) }}"><i class="fas fa-edit"></i></a></td>
-            </tr>
-          {% endfor %}
-          </tbody>
-        </table>
+
+        <ul>
+            {% for i in range(n) %}
+                <li style="list-style-type: square; color: {{ couleurs[i] }};">{{ entr_selectionnees[i][1] }}</li>
+            {% endfor %}
+        </ul>
+        <button id="btn_chart_organisation" class="btn btn-outline-primary">Diagramme Organisation</button>
+        <button id="btn_chart_technique" class="btn btn-outline-primary">Diagramme Technique</button>
+        <button id="btn_chart_scores" class="btn btn-outline-primary">Scores</button>
+
+
+        <div id="chart_organisation"></div>
+        <div id="chart_technique"></div>
+        <div id="chart_scores"></div>
     </div>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#chart_technique").hide();
+                    $("#chart_scores").hide();
+
+                    var options_organisation = {
+                        backgroundColor: "#e8e6ff",
+                        animationEnabled: true,
+                        title: {
+                            text: "Score des domaines en Organisation :",
+                            fontSize: 20,
+                        },
+                        axisX: {
+                          labelFontSize: 20
+                        },
+                        axisY: {
+                          maximum:10
+                        },
+                        toolTip: {
+                            shared: true,
+                            content: toolTipFormatter
+                        },
+                        dataPointWidth: 30,
+                        data: [
+                            {% for i in range(n) %}
+                                {
+                                type: "column",
+                                name: "{{ entr_selectionnees[i][1] }}",
+                                color: "{{ couleurs[i] }}",
+                                dataPoints: [
+                                    { y: {{ scores_gouv[i] }}, label: "Gouvernance" },
+                                    { y: {{ scores_proces_proced[i] }}, label: "Processus et procédures" },
+                                    { y: {{ scores_roles[i] }}, label: "Rôles et responsabilités" },
+                                    { y: {{ scores_out[i] }}, label: "Outillage" },
+                                    { y: {{ scores_conduite[i] }}, label: "Conduite du changement" },
+
+                                ]
+                                },
+                            {% endfor %}
+                        ]
+                    };
+                    $("#chart_organisation").CanvasJSChart(options_organisation);
+
+                    $("#btn_chart_organisation").click(function () {
+                        $("#chart_technique").hide();
+                        $("#chart_scores").hide();
+                        $("#chart_organisation").show();
+                        $("#chart_organisation").CanvasJSChart(options_organisation);
+                    });
+
+                    var options_technique = {
+                        backgroundColor: "#e8e6ff",
+                        animationEnabled: true,
+                        title: {
+                            text: "Score des domaines en Technique :",
+                            fontSize: 20,
+                        },
+
+                        axisY: {
+                          maximum:10
+                        },
+                        toolTip: {
+                            shared: true,
+                            content: toolTipFormatter
+                        },
+                        dataPointWidth: 30,
+                        data: [
+                            {% for i in range(n) %}
+                                {
+                                type: "column",
+                                name: "{{ entr_selectionnees[i][1] }}",
+                                color: "{{ couleurs[i] }}",
+                                dataPoints: [
+                                    { y: {{ scores_gestion[i] }}, label: "Gestion des systèmes" },
+                                    { y: {{ scores_app[i] }}, label: "Applications" },
+                                    { y: {{ scores_secu[i] }}, label: "Sécurité" },
+                                    { y: {{ scores_sup[i] }}, label: "Support" },
+                                    { y: {{ scores_outils[i] }}, label: "Outils collaboratif" },
+
+                                ]
+                                },
+                            {% endfor %}
+                        ]
+                    };
+                    $("#chart_technique").CanvasJSChart(options_technique);
+
+                    $("#btn_chart_technique").click(function () {
+                        $("#chart_organisation").hide();
+                        $("#chart_scores").hide();
+                        $("#chart_technique").show();
+                        $("#chart_technique").CanvasJSChart(options_technique);
+                    });
+
+                    var options_scores = {
+                        backgroundColor: "#e8e6ff",
+                        animationEnabled: true,
+                        title: {
+                            text: "Moyenne des scores :",
+                            fontSize: 20,
+                        },
+                        axisX: {
+                          labelFontSize: 20
+                        },
+                        axisY: {
+                          maximum:100
+                        },
+                        toolTip: {
+                            shared: true,
+                            content: toolTipFormatter
+                        },
+                        dataPointWidth: 30,
+                        data: [
+                            {% for i in range(n) %}
+                                {
+                                type: "column",
+                                name: "{{ entr_selectionnees[i][1] }}",
+                                color: "{{ couleurs[i] }}",
+                                dataPoints: [
+                                    { y: {{ scores_orga[i] }}, label: "Score Organisation" },
+                                    { y: {{ scores_tech[i] }}, label: "Score Technique" },
+                                    { y: {{ scores_tot[i] }}, label: "Score Total" },
+                                ]
+                                },
+                            {% endfor %}
+                        ]
+                    };
+
+                    $("#btn_chart_scores").click(function () {
+                        $("#chart_organisation").hide();
+                        $("#chart_technique").hide();
+                        $("#chart_scores").show();
+                        $("#chart_scores").CanvasJSChart(options_scores);
+                    });
+
+                });
+
+                function toolTipFormatter(e) {
+                    var str = "";
+                    var str2 ;
+                    for (var i = 0; i < e.entries.length; i++){
+                        var str1 = "<span style= \"color:"+e.entries[i].dataSeries.color + "\">" + e.entries[i].dataSeries.name + "</span>: <strong>"+  e.entries[i].dataPoint.y + "</strong> <br/>" ;
+                        str = str.concat(str1);
+                    }
+                    str2 = "<strong>" + e.entries[0].dataPoint.label + "</strong> <br/>";
+                    return (str2.concat(str));
+                }
+            </script>
 
 
 
 {% endblock %}
+
+

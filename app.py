@@ -2,7 +2,6 @@ import flask
 from flask import Flask
 from datetime import date
 
-
 Liste_formulaires_organisation = ["Formulaire_gouvernance","Formulaire_processus_procedures", "Formulaire_roles_responsabilites",
                     "Formulaire_outillage", "Formulaire_conduite_du_changement"]
 
@@ -11,6 +10,9 @@ Liste_formulaires_techniques = ["Formulaire_gestion_systemes", "Formulaire_appli
 
 
 app = Flask(__name__)
+
+
+
 
 
 @app.route('/')
@@ -110,8 +112,6 @@ def page_formulaire(id_entreprise):
     organisation_existe = cursor.execute('''SELECT Id_entreprise FROM Score_organisation WHERE Id_entreprise = ?''', id_entreprise).fetchone()!=None
 
     technique_existe = cursor.execute('''SELECT Id_entreprise FROM Score_technique WHERE Id_entreprise = ?''', id_entreprise).fetchone()!=None
-
-    score_total_existe = cursor.execute('''SELECT Id_entreprise FROM Score_total WHERE Id_entreprise = ?''', id_entreprise).fetchone()!=None
 
     if(organisation_existe and technique_existe):
 
@@ -609,33 +609,33 @@ def add_score_organisation(id_entreprise):
     WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
     score_gouvernance = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gouvernance
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gouvernance
             WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_gouvernance += question
+        score_gouvernance += score
     score_gouvernance = score_gouvernance * pourcentages[0] / 60
 
     score_processus_procedures = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_processus_procedures
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_processus_procedures
             WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_processus_procedures += question
+        score_processus_procedures += score
     score_processus_procedures = score_processus_procedures * pourcentages[1] / 60
 
     score_roles_responsabilites = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_roles_responsabilites
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_roles_responsabilites
             WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_roles_responsabilites += question
+        score_roles_responsabilites += score
     score_roles_responsabilites = score_roles_responsabilites * pourcentages[2] / 60
 
     score_outillage = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outillage
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outillage
                     WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_outillage += question
+        score_outillage += score
     score_outillage = score_outillage * pourcentages[3] / 60
 
     score_conduite_du_changement = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_conduite_du_changement
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_conduite_du_changement
                     WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_conduite_du_changement += question
+        score_conduite_du_changement += score
     score_conduite_du_changement = score_conduite_du_changement * pourcentages[4] / 60
 
     score_organisation = round(
@@ -1117,33 +1117,33 @@ def add_score_technique(id_entreprise):
        WHERE  Id_entreprise = ?''', id_entreprise).fetchone()
 
     score_gestion_systemes = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gestion_systemes
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gestion_systemes
                    WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_gestion_systemes += question
+        score_gestion_systemes += score
     score_gestion_systemes = score_gestion_systemes * pourcentages[0] / 60
 
     score_applications = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_applications
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_applications
                    WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_applications += question
+        score_applications += score
     score_applications = score_applications * pourcentages[1] / 60
 
     score_securite = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_securite
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_securite
                    WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_securite += question
+        score_securite += score
     score_securite = score_securite * pourcentages[2] / 60
 
     score_support = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_support
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_support
                            WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_support += question
+        score_support += score
     score_support = score_support * pourcentages[3] / 60
 
     score_outils_collaboratif = 0
-    for question in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outils_collaboratif
+    for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outils_collaboratif
                            WHERE Id_entreprise = ?''', id_entreprise).fetchone():
-        score_outils_collaboratif += question
+        score_outils_collaboratif += score
     score_outils_collaboratif = score_outils_collaboratif * pourcentages[4] / 60
 
     score_technique = round(
@@ -1170,14 +1170,14 @@ def add_score_technique(id_entreprise):
 def delete_formulaire(id_entreprise):
     from database import cursor, cnxn
 
-    entrepris = 'Entreprise'
+    entreprise = 'Entreprise'
 
-    str = 'delete from '+ entrepris+' where ID = ? '
+    str = 'delete from '+ entreprise+' where ID = ? '
 
     cursor.execute(''+str+'', id_entreprise)
     cnxn.commit()
 
-    return flask.redirect(flask.url_for("comparaison", id_entreprise = id_entreprise))
+    return flask.render_template('home.html.jinja2')
 
 @app.route('/formulaires_non_finis')
 def formulaires_non_finis():
@@ -1243,20 +1243,154 @@ def formulaires_non_finis():
 
     return flask.render_template("formulaires_non_finis.html.jinja2", L = L)
 
-@app.route('/comparaison')
-def comparaison():
+@app.route('/<id_entreprise>/liste_formulaires_finis/<secteur>')
+def liste_formulaires_finis(id_entreprise,secteur):
+
     from database import cursor
     entreprise_liste = []
-    for row in cursor.execute('''SELECT ID, Nom, Score_organisation.Score, Score_technique.Score, Score_total.Score, Date
-        FROM Entreprise,Score_organisation, Score_technique, Score_total
-        WHERE Score_organisation.Id_entreprise = Entreprise.ID AND Score_technique.Id_entreprise = Entreprise.ID AND Score_total.Id_entreprise = Entreprise.ID
-        ORDER BY ID'''):
-        entreprise_liste += [[row[0], row[1], row[2], row[3], row[4], row[5]]]
+    ids_toutes_entreprises = []
+
+    for row in cursor.execute('''SELECT ID FROM Entreprise, Score_total WHERE ID = Score_total.Id_entreprise AND ID <> ? ORDER BY ID''', id_entreprise):
+        ids_toutes_entreprises += [row[0]]
+
+    if (secteur == 'Tous les secteurs...'):
+        for row in cursor.execute('''SELECT ID, Nom, Secteur, Nombre_employes, Score_total.Score FROM Entreprise, Score_total 
+            WHERE ID = Score_total.Id_entreprise AND ID <> ? ORDER BY ID''', id_entreprise):
+            entreprise_liste += [[row[0], row[1], row[2], row[3], row[4]]]
+
+    else:
+        for row in cursor.execute('''SELECT ID, Nom, Secteur, Nombre_employes, Score_total.Score FROM Entreprise, Score_total 
+            WHERE ID = Score_total.Id_entreprise AND Secteur = ? AND ID <> ? ORDER BY ID''', secteur, id_entreprise):
+            entreprise_liste += [[row[0], row[1], row[2], row[3], row[4]]]
+
+    secteurs=[]
+    for row in cursor.execute('''SELECT DISTINCT Secteur FROM Entreprise, Score_total WHERE ID=Score_total.Id_entreprise AND ID <> ?''', id_entreprise):
+        secteurs+=[row[0]]
 
     if (entreprise_liste != [[]]):
-        return flask.render_template("comparaison.html.jinja2", entreprise_liste=entreprise_liste)
+        return flask.render_template("liste_formulaires_finies.html.jinja2", entreprise_liste=entreprise_liste, secteurs=secteurs, secteur_selec=secteur, id_entreprise=id_entreprise,
+                                     ids_toutes_entreprises=ids_toutes_entreprises)
     else:
-        return flask.render_template("comparaison.html.jinja2")
+        return flask.render_template("liste_formulaires_finies.html.jinja2", id_entreprise=id_entreprise)
+
+@app.route('/<id_entreprise>/liste_formulaires_finis/filtrer_entreprises', methods=["POST"])
+def filtrer_entreprises(id_entreprise):
+    secteur = flask.request.form["secteur"]
+
+    return flask.redirect(flask.url_for("liste_formulaires_finis",secteur=secteur, id_entreprise=id_entreprise))
+
+
+@app.route('/<id_entreprise>/liste_formulaires_finis/comparaison', methods=["POST"])
+def choix_entreprises(id_entreprise):
+    from database import cursor
+
+    ids_toutes_entreprises=[]
+    for row in cursor.execute('''SELECT ID FROM Entreprise, Score_total WHERE ID = Score_total.Id_entreprise AND ID <> ?''', id_entreprise):
+        ids_toutes_entreprises+=[row[0]]
+    form = [id_entreprise]
+    for id in ids_toutes_entreprises:
+        if(flask.request.form.get(str(id)) == "valide"):
+            form += [id]
+
+    entr_selectionnees = []
+    scores_gouv=[]
+    scores_proces_proced=[]
+    scores_roles= []
+    scores_out = []
+    scores_conduite = []
+
+    scores_gestion = []
+    scores_app = []
+    scores_secu = []
+    scores_sup = []
+    scores_outils = []
+
+    scores_orga = []
+    scores_tech = []
+    scores_tot = []
+
+    for id in form:
+        entr_selectionnees += [cursor.execute('''SELECT * FROM Entreprise WHERE ID=?''', id).fetchone()]
+
+        #SCORES ORGANISATION
+        score_gouvernance = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gouvernance
+                   WHERE Id_entreprise = ?''', id).fetchone():
+            score_gouvernance += score
+        scores_gouv += [round(score_gouvernance / 6,2)]
+
+        score_processus_procedures = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_processus_procedures
+                   WHERE Id_entreprise = ?''', id).fetchone():
+            score_processus_procedures += score
+        scores_proces_proced += [round(score_processus_procedures / 6,2)]
+
+        score_roles_responsabilites = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_roles_responsabilites
+                   WHERE Id_entreprise = ?''', id).fetchone():
+            score_roles_responsabilites += score
+        scores_roles += [round(score_roles_responsabilites / 6,2)]
+
+        score_outillage = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outillage
+                           WHERE Id_entreprise = ?''', id).fetchone():
+            score_outillage += score
+        scores_out += [round(score_outillage / 6,2)]
+
+        score_conduite_du_changement = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_conduite_du_changement
+                           WHERE Id_entreprise = ?''', id).fetchone():
+            score_conduite_du_changement += score
+        scores_conduite += [round(score_conduite_du_changement / 6,2)]
+
+        #SCORES TECHNIQUE
+
+        score_gestion_systemes = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_gestion_systemes
+                           WHERE Id_entreprise = ?''', id).fetchone():
+            score_gestion_systemes += score
+        scores_gestion += [round(score_gestion_systemes / 6,2)]
+
+        score_applications = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_applications
+                           WHERE Id_entreprise = ?''', id).fetchone():
+            score_applications += score
+        scores_app += [round(score_applications / 6,2)]
+
+        score_securite = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_securite
+                           WHERE Id_entreprise = ?''', id).fetchone():
+            score_securite += score
+        scores_secu += [round(score_securite / 6,2)]
+
+        score_support = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_support
+                                   WHERE Id_entreprise = ?''', id).fetchone():
+            score_support += score
+        scores_sup += [round(score_support / 6,2)]
+
+        score_outils_collaboratif = 0
+        for score in cursor.execute('''SELECT Score1, Score2, Score3, Score4, Score5, Score6 FROM Formulaire_outils_collaboratif
+                                   WHERE Id_entreprise = ?''', id).fetchone():
+            score_outils_collaboratif += score
+        scores_outils += [round(score_outils_collaboratif / 6,2)]
+
+        #SCORES
+
+        scores_orga += [cursor.execute('''SELECT Score FROM Score_organisation WHERE Id_entreprise = ?''', id).fetchone()[0]]
+        scores_tech += [cursor.execute('''SELECT Score FROM Score_technique WHERE Id_entreprise = ?''', id).fetchone()[0]]
+        scores_tot += [cursor.execute('''SELECT Score FROM Score_total WHERE Id_entreprise = ?''', id).fetchone()[0]]
+
+
+
+        couleurs=["#ff001b","#0001ff","#00beff","#9600ff"]
+
+    return flask.render_template("comparaison.html.jinja2", entr_selectionnees=entr_selectionnees ,scores_gouv=scores_gouv, scores_proces_proced=scores_proces_proced,
+                                 scores_roles=scores_roles, scores_out=scores_out, scores_conduite=scores_conduite , n = len(entr_selectionnees), couleurs = couleurs,
+                                 scores_gestion=scores_gestion, scores_app=scores_app, scores_secu=scores_secu, scores_sup=scores_sup, scores_outils=scores_outils,
+                                 scores_orga=scores_orga, scores_tech=scores_tech, scores_tot=scores_tot)
+
+
 
 @app.route('/<id_entreprise>/reponses_formulaire')
 def reponses_formulaire(id_entreprise):

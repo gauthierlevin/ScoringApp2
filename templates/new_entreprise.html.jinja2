@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <form action="{{ url_for("add_entreprise") }}" method="post">
+    <form action="{{ url_for("add_entreprise") }}" method="post" id="formEntreprise">
         <div id="groupe">
             <div class="form-group">
                 <label for="formGroupExampleInput">Nom entreprise</label>
@@ -14,31 +14,45 @@
             </div>
             <div class="form-group">
                     <label for="inputSecteur">Secteur d'activité</label>
-                        <select id="inputSecteur" class="form-control" name="Secteur">
-                            <option>Choisir un secteur d'activité ...</option>
+                        <select id="inputSecteur" class="form-control fa" name="Secteur">
+                            <option class="fa" value="0">Choisir un secteur d'activité ...</option>
                             <option class="fa">&#xf2e7; Agroalimentaire</option>
-                            <option class="fa">&#xf249; Bois / Papier / Carton / Imprimerie</option>
-                            <option class="fa">&#xf0c3; Chimie / Parachimie</option>
-                            <option class="fa">&#xf1ea; Edition / communication / Multimédia</option>
-                            <option class="fa">&#xf080; Etudes et conseils</option>
-                            <option class="fa">&#xf108; Informatique / Télécoms</option>
-                            <option class="fa">&#xf576; Métallurgie / Travail du métal</option>
-                            <option class="fa">&#xf4c4; Services aux entreprises</option>
-                            <option class="fa">&#xf4df; Transport / Logistique</option>
-                            <option class="fa">&#xf19c; Banque / Assurance</option>
-                            <option class="fa">&#xf015; BTP / Matériaux de construction</option>
-                            <option class="fa">&#xf07a; Commerce / Distribution</option>
-                            <option class="fa">&#xf2db; Electronique / Electricité</option>
-                            <option class="fa">&#xf610; Industrie du pharmaceutique</option>
-                            <option class="fa">&#xf085; Machines et équipements / Automobile</option>
-                            <option class="fa">&#xf275; Plastique / Caoutchouc</option>
-                            <option class="fa">&#xf553; Textile / Habillement / Chaussure</option>
-                            <option>Autres ..</option>
+                            <option class="fa" value="Bois - Papier - Carton - Imprimerie">&#xf249; Bois - Papier - Carton - Imprimerie</option>
+                            <option class="fa" value="Chimie - Parachimie">&#xf0c3; Chimie - Parachimie</option>
+                            <option class="fa" value="Edition - communication - Multimédia">&#xf1ea; Edition - communication - Multimédia</option>
+                            <option class="fa" value="Etudes et conseils">&#xf080; Etudes et conseils</option>
+                            <option class="fa" value="Informatique - Télécoms">&#xf108; Informatique - Télécoms</option>
+                            <option class="fa" value="Métallurgie - Travail du métal">&#xf575; Métallurgie - Travail du métal</option>
+                            <option class="fa" value="Services aux entreprises">&#xf4c4; Services aux entreprises</option>
+                            <option class="fa" value="Transport - Logistique">&#xf4df; Transport - Logistique</option>
+                            <option class="fa" value="Banque - Assurance">&#xf19c; Banque - Assurance</option>
+                            <option class="fa" value="BTP - Matériaux de construction">&#xf015; BTP - Matériaux de construction</option>
+                            <option class="fa" value="Commerce - Distribution">&#xf07a; Commerce - Distribution</option>
+                            <option class="fa" value="Electronique - Electricité">&#xf2db; Electronique - Electricité</option>
+                            <option class="fa" value="Industrie du pharmaceutique">&#xf610; Industrie du pharmaceutique</option>
+                            <option class="fa" value="Machines et équipements - Automobile">&#xf085; Machines et équipements - Automobile</option>
+                            <option class="fa" value="Plastique - Caoutchouc">&#xf275; Plastique - Caoutchouc</option>
+                            <option class="fa" value="Textile - Habillement - Chaussure">&#xf553; Textile - Habillement - Chaussure</option>
+                            <option class="fa" value="Autres...">Autres ..</option>
                         </select>
             </div>
-            <button class="btn btn-primary" type="submit">Enregistrer</button>
+            <button id="enregistrer" class="btn btn-primary" type="submit">Enregistrer</button>
         </div>
     </form>
+
+    <script>
+        $(document).ready(function() {
+            $("#formEntreprise").submit(function(e) {
+                if($("#inputSecteur").val()==="0") {
+                    e.preventDefault();
+                    alert("Vous avez selectionné 'Choisir un secteur d'activité' comme secteur, veuillez recommencer !");
+                }
+
+            });
+
+        });
+
+    </script>
 
 
 {% endblock %}

@@ -36,31 +36,32 @@
               </div>
             </div>
             {% if scores is not defined %}
-                <div class="form-check form-check-inline">
-                    <input class="form-check form-check-inline" type="radio" id="0" name="s{{ k }}" value=0 form="reponses" checked>
-                    <label for="0">0</label>
+                 <div class="form-check form-check-inline">
+                    <input class="form-check form-check-inline" type="radio" id="{{ k }}_0" name="s{{ k }}" value=0 form="reponses" checked>
+                    <label for="{{ k }}_0">0</label>
                 </div>
                 {% for i in range(1,11) %}
                     <div class="form-check form-check-inline">
-                        <input class="form-check form-check-inline" type="radio" id="{{ i }}" name="s{{ k }}" form="reponses" value={{ i }}>
-                        <label for="{{ i }}">{{ i }}</label>
+                        <input class="form-check form-check-inline" type="radio" id="{{ k }}_{{ i }}" name="s{{ k }}" form="reponses" value={{ i }}>
+                        <label for="{{ k }}_{{ i }}">{{ i }}</label>
                     </div>
                 {% endfor %}
             {% else %}
                 {% for i in range(0,11) %}
                     {% if i == scores[k-1] %}
                         <div class="form-check form-check-inline">
-                            <input class="form-check form-check-inline" type="radio" id="{{ i }}" name="s{{ k }}" form="reponses" value={{ i }} checked>
-                            <label for="{{ i }}">{{ i }}</label>
+                            <input class="form-check form-check-inline" type="radio" id="{{ k }}_{{ i }}" name="s{{ k }}" form="reponses" value={{ i }} checked>
+                            <label for="{{ k }}_{{ i }}">{{ i }}</label>
                         </div>
                     {% else %}
                         <div class="form-check form-check-inline">
-                            <input class="form-check form-check-inline" type="radio" id="{{ i }}" name="s{{ k }}" form="reponses" value={{ i }}>
-                            <label for="{{ i }}">{{ i }}</label>
+                            <input class="form-check form-check-inline" type="radio" id="{{ k }}_{{ i }}" name="s{{ k }}" form="reponses" value={{ i }}>
+                            <label for="{{ k }}_{{ i }}">{{ i }}</label>
                         </div>
                     {% endif %}
                 {% endfor %}
             {% endif %}
+
 
             <p>
               <a id="comm" data-toggle="collapse" href="#comm{{ k }}" aria-expanded="false" aria-controls="collapseExample">
@@ -80,5 +81,42 @@
     {% endfor %}
 
         <button id="suivant" class="btn btn-primary" type="submit" form="reponses">Fin Organisation</button>
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+            for(var k=1;k<7;k++) {
+                if(localStorage.getItem("s"+k.toString()) !== null) {
+                    var val_string = localStorage.getItem('s'+k.toString()).toString();
+                    $("#"+k.toString()+"_"+val_string).prop("checked",true);
+                }
+            }
+
+
+
+            $('input[name=s1]').on('click',function () {
+                localStorage.setItem('s1',$('input[name=s1]:checked').val());
+            });
+            $('input[name=s2]').on('click',function () {
+                localStorage.setItem('s2',$('input[name=s2]:checked').val());
+            });
+            $('input[name=s3]').on('click',function () {
+                localStorage.setItem('s3',$('input[name=s3]:checked').val());
+            });
+            $('input[name=s4]').on('click',function () {
+                localStorage.setItem('s4',$('input[name=s4]:checked').val());
+            });
+            $('input[name=s5]').on('click',function () {
+                localStorage.setItem('s5',$('input[name=s5]:checked').val());
+            });
+            $('input[name=s6]').on('click',function () {
+                localStorage.setItem('s6',$('input[name=s6]:checked').val());
+            });
+        });
+
+        $("#reponses").submit(function () {
+            localStorage.clear();
+        });
+    </script>
+
 
 {% endblock %}
