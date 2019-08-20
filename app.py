@@ -1397,7 +1397,3 @@ def reponses_formulaire(id_entreprise):
     return flask.render_template("reponses_formulaire.html.jinja2", id_entreprise = id_entreprise)
 
 
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', debut=True)
