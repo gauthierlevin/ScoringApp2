@@ -3,16 +3,19 @@
 
 {% block body %}
     <div id="groupe">
+        <div id="entrepises_choisies">
+            <ul>
+                {% for i in range(n) %}
+                    <li style="list-style-type: square; color: {{ couleurs[i] }};">{{ entr_selectionnees[i][1] }}</li>
+                {% endfor %}
+            </ul>
+        </div>
 
-        <ul>
-            {% for i in range(n) %}
-                <li style="list-style-type: square; color: {{ couleurs[i] }};">{{ entr_selectionnees[i][1] }}</li>
-            {% endfor %}
-        </ul>
-        <button id="btn_chart_organisation" class="btn btn-outline-primary">Diagramme Organisation</button>
-        <button id="btn_chart_technique" class="btn btn-outline-primary">Diagramme Technique</button>
-        <button id="btn_chart_scores" class="btn btn-outline-primary">Scores</button>
-
+        <div id="btn_diagrammes">
+            <button id="btn_chart_organisation" class="btn btn-outline-primary">Diagramme Organisation</button>
+            <button id="btn_chart_technique" class="btn btn-outline-primary">Diagramme Technique</button>
+            <button id="btn_chart_scores" class="btn btn-outline-primary">Scores</button>
+        </div>
 
         <div id="chart_organisation"></div>
         <div id="chart_technique"></div>
