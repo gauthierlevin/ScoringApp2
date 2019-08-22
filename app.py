@@ -17,7 +17,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return flask.render_template("home.html.jinja2")
+    from database import cursor
+    entreprises_formulaires_finis = []
+    for row in cursor.execute('''SELECT ID, Nom FROM Entreprise, Score_total WHERE ID=Score_total.Id_entreprise'''):
+        entreprises_formulaires_finis+= [[row[0],row[1]]]
+
+    return flask.render_template("home.html.jinja2", entreprises_formulaires_finis=entreprises_formulaires_finis)
 
 @app.route('/new_entreprise')
 def new_entreprise():
@@ -1395,5 +1400,4 @@ def choix_entreprises(id_entreprise):
 @app.route('/<id_entreprise>/reponses_formulaire')
 def reponses_formulaire(id_entreprise):
     return flask.render_template("reponses_formulaire.html.jinja2", id_entreprise = id_entreprise)
-
 
