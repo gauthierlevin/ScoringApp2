@@ -34,7 +34,7 @@
               <th id="bordure_noire" scope="col" class= "center">Secteur</th>
               <th id="bordure_noire" scope="col" class= "center">Nombre d'employés</th>
               <th id="bordure_noire" scope="col" class= "center">Score total</th>
-              <th id="bordure_noire" scope="col"></th>
+{#              <th id="bordure_noire" scope="col"></th>#}
             </tr>
           </thead>
           <tbody>
@@ -53,8 +53,8 @@
               <td id="bordure_noire">{{ entreprise[2] }}</td>
               <td id="bordure_noire">{{ entreprise[3] }}</td>
               <td id="bordure_noire">{{ entreprise[4] }}</td>
-              <td id="bordure_noire" class="center"><a href="{{ url_for("delete_formulaire", id_entreprise = entreprise[0]) }}" onclick="return confirm('Voulez-vous vraiment supprimer ce questionnaire ?')">
-                  <i class="fas fa-trash-alt"></i></a></td>
+{#              <td id="bordure_noire" class="center"><a href="{{ url_for("delete_formulaire", id_entreprise = entreprise[0]) }}" onclick="return confirm('Voulez-vous vraiment supprimer ce questionnaire ?')">#}
+{#                  <i class="fas fa-trash-alt"></i></a></td>#}
             </tr>
           {% endfor %}
           </tbody>
