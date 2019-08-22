@@ -10,9 +10,16 @@
 
 
 
-    <a style="position: absolute; bottom: 0; left: 0 ; color: aliceblue" href="{{ url_for("formulaires_non_finis") }}"> Liste des formulaires en cours</a>
-
+    <a style="position: absolute; bottom:5px; left: 5px ; color: #6c757d" href="{{ url_for("formulaires_non_finis") }}"> Liste des formulaires en cours</a>
+    <div class="dropdown" style="position: absolute; left: 5px; bottom:30px;">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Formulaires finis
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {% for entreprise in entreprises_formulaires_finis %}
+            <a class="dropdown-item" href="{{ url_for("page_formulaire", id_entreprise = entreprise[0]) }}">{{ entreprise[1] }}</a>
+        {% endfor%}
+      </div>
+    </div>
 
 {% endblock %}
-
-
