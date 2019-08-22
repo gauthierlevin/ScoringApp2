@@ -9,8 +9,8 @@
                 <input class="form-control" id="formGroupExampleInput" name="Nom" type="text" placeholder="Nom Entreprise" autocomplete="off">
             </div>
             <div class="form-group">
-                <label for="formGroupExampleInput2">Nombre d'employés</label>
-                <input class="form-control" id="formGroupExampleInput2" name="Nombre_employes" type="text" placeholder="Nombre d'employés" autocomplete="off">
+                <label for="inputNbrEmployes">Nombre d'employés</label>
+                <input class="form-control" id="inputNbrEmployes" name="Nombre_employes" type="number" placeholder="Nombre d'employés" autocomplete="off">
             </div>
             <div class="form-group">
                     <label for="inputSecteur">Secteur d'activité</label>
@@ -47,7 +47,6 @@
                     e.preventDefault();
                     alert("Vous avez selectionné 'Choisir un secteur d'activité' comme secteur, veuillez recommencer !");
                 }
-
             });
 
         });
@@ -56,5 +55,3 @@
 
 
 {% endblock %}
-
-
